@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local test photo — not referenced by the app, and kept out of the public repo
+# on purpose. Remove this line (and `git add -f unnamed.jpg`) if you want it in.
+unnamed.jpg

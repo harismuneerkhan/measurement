@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BodyMeasure – Face & Body Sizing</title>
+  <link rel="stylesheet" href="src/styles/main.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ── Header ── -->
+    <header class="header">
+      <h1>📐 BodyMeasure</h1>
+      <p class="subtitle">Real-time face & body measurements from your camera or a photo</p>
+    </header>
+
+    <!-- ── Mode Tabs ── -->
+    <div class="tabs">
+      <button class="tab active" data-mode="camera">📷 Live Camera</button>
+      <button class="tab" data-mode="upload">🖼️ Upload Image</button>
+    </div>
+
+    <!-- ── Calibration Banner ── -->
+    <div class="calibration-banner" id="calibrationBanner">
+      <span>⚠️ <strong>Calibration required:</strong> Hold a standard credit card (85.6 × 54 mm) flat in front of the camera, then click <em>Calibrate</em>.</span>
+      <div class="cal-controls">
+        <select id="refObject">
+          <option value="creditcard">Credit Card (85.6 mm wide)</option>
+          <option value="a4">A4 Paper (210 mm wide)</option>
+          <option value="custom">Custom width…</option>
+        </select>
+        <input type="number" id="customWidth" placeholder="mm" style="display:none; width:80px;" />
+        <button id="calibrateBtn" class="btn btn-primary">Calibrate</button>
+        <span id="calStatus" class="cal-status"></span>
+      </div>
+    </div>
+
+    <!-- ── Main Canvas Area ── -->
+    <div class="workspace">
+      <!-- Camera stream (hidden – feeds canvas) -->
+      <video id="video" autoplay playsinline muted></video>
+
+      <!-- Upload preview -->
+      <div class="upload-area" id="uploadArea" style="display:none;">
+        <label for="fileInput" class="upload-label">
+          <span>Drop an image here or <u>browse</u></span>
+          <input type="file" id="fileInput" accept="image/*" />
+        </label>
+        <img id="uploadedImg" alt="uploaded" style="display:none;" />
+      </div>
+
+      <!-- Overlay canvas (landmarks + measurements drawn here) -->
+      <canvas id="canvas"></canvas>
+
+      <!-- Detect button (upload mode) -->
+      <button id="detectBtn" class="btn btn-secondary" style="display:none;">🔍 Detect & Measure</button>
+    </div>
+
+    <!-- ── Measurement Selector ── -->
+    <div class="measure-panel">
+      <h3>Measurements to show</h3>
+      <div class="checkboxes">
+        <label><input type="checkbox" data-measure="faceWidth"         checked /> Face Width</label>
+        <label><input type="checkbox" data-measure="headCircumference" checked /> Head Circumference (est.)</label>
+        <label><input type="checkbox" data-measure="pd"                checked /> Pupillary Distance (PD)</label>
+        <label><input type="checkbox" data-measure="noseHeight"               /> Nose Height</label>
+        <label><input type="checkbox" data-measure="jawWidth"                 /> Jaw Width</label>
+        <label><input type="checkbox" data-measure="shoulderWidth"     checked /> Shoulder Width</label>
+        <label><input type="checkbox" data-measure="neckWidth"                /> Neck Width (est.)</label>
+        <label><input type="checkbox" data-measure="armLength"                /> Arm Length</label>
+      </div>
+    </div>
+
+    <!-- ── Results Table ── -->
+    <div class="results" id="results">
+      <h3>Results</h3>
+      <table id="resultsTable">
+        <thead>
+          <tr><th>Measurement</th><th>Value</th><th>Typical Range</th></tr>
+        </thead>
+        <tbody id="resultsBody">
+          <tr><td colspan="3" class="placeholder">Run calibration, then face the camera.</td></tr>
+        </tbody>
+      </table>
+      <button id="exportBtn" class="btn btn-outline" style="margin-top:12px;">⬇️ Export CSV</button>
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer class="footer">
+      All processing happens locally in your browser. No images are uploaded to any server.
+    </footer>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
